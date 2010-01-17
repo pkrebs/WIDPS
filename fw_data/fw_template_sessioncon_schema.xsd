@@ -1,0 +1,46 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- Schema for validation of session containment template rules files. -->
+
+<xsd:element name="template_config" type="templateconfigtype"/>
+	
+<xsd:complexType name="templateconfigtype">
+	<xsd:sequence>
+		<xsd:element name="containment_rule" type="containmentruletype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="template_type" type="xsd:string"/>
+</xsd:complexType>
+	
+<xsd:complexType name="containmentruletype">
+	<xsd:sequence>
+		<xsd:element name="rule_description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="rule_data" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="trigger_signature" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		<xsd:element name="frame_type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="duration" type="durationtype" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="sleeptime" type="sleeptimetype" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="impersonate_rule" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+	</xsd:sequence>
+	<xsd:attribute name="rule_identifier" type="xsd:string" use="required"/>
+	<xsd:attribute name="rule_severity" type="xsd:integer"/>
+	<xsd:attribute name="rule_action" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="rule_interruptible" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="enable" type="xsd:nonNegativeInteger"/>
+</xsd:complexType>
+	
+<xsd:complexType name="durationtype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="time_scale" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+	
+<xsd:complexType name="sleeptimetype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="time_scale" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+
+</xsd:schema>

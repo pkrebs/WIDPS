@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test configuration for capture module only. -->
+<!DOCTYPE config>
+<config>
+	<!-- Configuration for the controller. -->
+	<controller_config loglevel="info">
+			<pidfile>
+				"/tmp/controller_capture.pid"
+			</pidfile>
+		
+			<module_properties module_type="capture_pcapy" module_priority="5">
+				<module_name>
+					"fw_modules.module_capture_pcapy"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="detection_engine" module_priority="4">
+				<module_name>
+					"fw_modules.module_detection_engine"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="prevention_engine" module_priority="3">
+				<module_name>
+					"fw_modules.module_prevention_engine"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="executor" module_priority="2">
+				<module_name>
+					"fw_modules.module_executor"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="notifier" module_priority="1">
+				<module_name>
+					"fw_modules.module_notifier"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="dumper" module_priority="0.5">
+				<module_name>
+					"fw_modules.module_dumper"
+				</module_name>
+			</module_properties>
+		
+			<template_properties template_type="template_sid">
+				<template_name>
+					"fw_modules.fw_detection_templates.template_sid"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_threshold">
+				<template_name>
+					"fw_modules.fw_detection_templates.template_threshold"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_sessioncon">
+				<template_name>
+					"fw_modules.fw_prevention_templates.template_sessioncon"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_dumper">
+				<template_name>
+					"fw_modules.fw_output_templates.template_dumper"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_gui">
+				<template_name>
+					"fw_modules.fw_output_templates.template_gui"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_dbdumper_mysql">
+				<template_name>
+					"fw_modules.fw_output_templates.template_dbdumper_mysql"
+				</template_name>
+			</template_properties>
+		
+			<value value_name='outfile'>
+				"/tmp/controller_capture.out"
+			</value>
+		
+			<value value_name='logfile'>
+				"/tmp/controller_capture.log"
+			</value>
+	</controller_config>
+	
+	<!-- Configurations for submodules. -->
+	
+	<module_config module_type="capture_pcapy" module_identifier="capture" module_loglevel="debug">
+		<module_receivers>
+			""
+		</module_receivers>
+		
+		<!-- Offline capture from file -->
+		<value value_name="capture_mode">
+			"1"
+		</value>
+
+		<!-- Path to pcap dumpfile -->
+		<value value_name="capture_source">
+			"fw_data/wlandump.pcap"
+		</value>
+		
+		<!-- Identifier in frame data messages -->
+		<value value_name="capture_signature">
+			"PCAPY_1"
+		</value>
+	</module_config>
+	
+</config>

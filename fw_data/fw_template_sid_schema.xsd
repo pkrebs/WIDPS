@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- Schema for validation of SID template signature files. -->
+
+<xsd:element name="template_config" type="templateconfigtype"/>
+	
+<xsd:complexType name="templateconfigtype">
+	<xsd:sequence>
+		<xsd:element name="simple_signature" type="simplesignaturetype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="complex_signature" type="complexsignaturetype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="template_type" type="xsd:string"/>
+</xsd:complexType>
+	
+<xsd:complexType name="simplesignaturetype">
+	<xsd:sequence>
+		<xsd:element name="signature_description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="signature_data" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="signature_patterns" type="signaturepatternstype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="signature_identifier" type="xsd:string" use="required"/>
+	<xsd:attribute name="signature_severity" type="xsd:integer"/>
+	<xsd:attribute name="signature_logic" type="xsd:string"/>
+	<xsd:attribute name="signature_silent" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="signature_invert" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="enable" type="xsd:nonNegativeInteger"/>
+</xsd:complexType>
+	
+<xsd:complexType name="signaturepatternstype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="frame_value" type="xsd:string" use="required"/>
+		<xsd:attribute name="pattern_type" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+	
+<xsd:complexType name="complexsignaturetype">
+	<xsd:sequence>
+		<xsd:element name="signature_description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="signature_data" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="signature_subsignatures" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+	</xsd:sequence>
+	<xsd:attribute name="signature_identifier" type="xsd:string" use="required"/>
+	<xsd:attribute name="signature_severity" type="xsd:integer"/>
+	<xsd:attribute name="signature_logic" type="xsd:string"/>
+	<xsd:attribute name="signature_silent" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="enable" type="xsd:nonNegativeInteger"/>
+</xsd:complexType>
+
+</xsd:schema>

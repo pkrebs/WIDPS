@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is the framework's general config file. It is parsed by the controller only. -->
+<!DOCTYPE config>
+<config>
+	<!-- Configuration for the controller. -->
+	<controller_config>
+		
+			<pidfile>
+				"/home/peter/DA/data/widswips_framework_v1/src/fw_data/controller.pid"
+			</pidfile>
+		
+			<module_properties module_type="capture_pcapy">
+				<module_name>
+					"fw_modules.module_capture_pcapy"
+				</module_name>
+				<module_class>
+					"CaptureClass"
+				</module_class>
+				<module_priority>
+					"3"
+				</module_priority>
+			</module_properties>
+		
+			<module_properties module_type="detection_engine">
+				<module_name>
+					"fw_modules.module_detection_engine"
+				</module_name>
+				<module_class>
+					"DetectionEngineClass"
+				</module_class>
+				<module_priority>
+					"2"
+				</module_priority>
+			</module_properties>
+		
+			<module_properties module_type="dumper">
+				<module_name>
+					"fw_modules.module_dumper"
+				</module_name>
+				<module_class>
+					"DumperClass"
+				</module_class>
+				<module_priority>
+					"1"
+				</module_priority>
+			</module_properties>
+		
+			<value value_name='outfile'>
+				"/home/peter/DA/data/widswips_framework_v1/src/fw_data/controller.out"
+			</value>
+		
+	</controller_config>
+	
+	<!-- Configurations for submodules. -->
+	<module_config module_type="capture_pcapy" module_identifier="capture">
+		
+		<module_receivers>
+			"dumper1,dumper2"
+		</module_receivers>
+		
+		<value value_name="capture_mode" value_type="int">
+			"1"
+		</value>
+
+		<value value_name="capture_source">
+			"/home/peter/DA/data/wlandump1"
+		</value>
+		
+		<value value_name="capture_signature">
+			"PCAPY_1"
+		</value>
+		
+	</module_config>
+	
+	<module_config module_type="dumper" module_identifier="dumper1">
+		
+		<module_receivers>
+			""
+		</module_receivers>
+		
+		<value value_name="dumpfile">
+			"/home/peter/DA/data/dumpfile1.out"
+		</value>
+		
+	</module_config>
+	
+	<module_config module_type="dumper" module_identifier="dumper2">
+		
+		<module_receivers receiver_type="remote">
+			"remote_director"
+		</module_receivers>
+		
+		<value value_name="dumpfile">
+			"/home/peter/DA/data/dumpfile2.out"
+		</value>
+		
+	</module_config>
+	
+	<misc_config>
+		<remote_alias alias_identifier="remote_director" remote_portnumber="9999"/>
+	</misc_config>
+</config>

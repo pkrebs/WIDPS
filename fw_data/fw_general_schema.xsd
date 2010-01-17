@@ -1,0 +1,92 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- Schema for validation of framework configuration file -->
+
+<xsd:element name="config" type="configtype"/>
+	
+<xsd:complexType name="configtype">
+	<xsd:sequence>
+		<xsd:element name="controller_config" type="controllerconfigtype" minOccurs="1" maxOccurs="1"/>
+		<xsd:element name="module_config" type="moduleconfigtype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="misc_config" type="miscconfigtype" minOccurs="0" maxOccurs="1"/>
+	</xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="controllerconfigtype">
+	<xsd:sequence>
+		<xsd:element name="pidfile" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		<xsd:element name="module_properties" type="modulepropertiestype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="template_properties" type="templatepropertiestype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="value" type="valuetype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="loglevel" type="xsd:string"/>
+</xsd:complexType>
+	
+<xsd:complexType name="modulepropertiestype">
+	<xsd:sequence>
+		<xsd:element name="module_name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+	<xsd:attribute name="module_type" type="xsd:string" use="required"/>
+	<xsd:attribute name="module_priority" type="xsd:decimal" use="required"/>
+</xsd:complexType>
+	
+<xsd:complexType name="templatepropertiestype">
+	<xsd:sequence>
+		<xsd:element name="template_name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+	<xsd:attribute name="template_type" type="xsd:string" use="required"/>
+</xsd:complexType>
+
+<xsd:complexType name="moduleconfigtype">
+	<xsd:sequence>
+		<xsd:element name="module_receivers" type="modulereceiverstype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="template_configuration" type="templateconfigurationtype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="value" type="valuetype" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="include" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="module_type" type="xsd:string" use="required"/>
+	<xsd:attribute name="module_identifier" type="xsd:string"/>
+	<xsd:attribute name="module_address" type="xsd:string"/>
+	<xsd:attribute name="module_priority" type="xsd:string"/>
+	<xsd:attribute name="module_loglevel" type="xsd:string"/>
+</xsd:complexType>
+
+<xsd:complexType name="modulereceiverstype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="receiver_type" type="xsd:string"/>
+		<xsd:attribute name="receiver_groups" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+	
+<xsd:complexType name="templateconfigurationtype">
+	<xsd:sequence>
+		<xsd:element name="value" type="valuetype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="template_type" type="xsd:string" use="required"/>
+	<xsd:attribute name="template_identifier" type="xsd:string"/>
+	<xsd:attribute name="template_loglevel" type="xsd:string"/>
+</xsd:complexType>
+	
+<xsd:complexType name="valuetype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="value_name" type="xsd:string" use="required"/>
+		<xsd:attribute name="value_type" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+	
+<xsd:complexType name="miscconfigtype">
+	<xsd:sequence>
+		<xsd:element name="remote_alias" type="remotealiastype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="remotealiastype">
+	<xsd:attribute name="alias_identifier" type="xsd:string" use="required"/>
+	<xsd:attribute name="remote_hostname" type="xsd:string"/>
+	<xsd:attribute name="remote_portnumber" type="xsd:nonNegativeInteger" use="required"/>
+</xsd:complexType>
+	
+</xsd:schema>

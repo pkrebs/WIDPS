@@ -1,0 +1,38 @@
+ToDo's for the WIDS/WIPS framework
+==================================
+
+Following is a rather incomplete list of possible extensions/improvements to the framework:
+
+General
+-------
+
+* Adding more detection, prevention and output templates
+
+* Executing performance tests and improving speed
+
+* Improving exception handling (e.g. more exception classes, escalate exceptions to a single caller)
+
+* Improving documentation of modules and functions (e.g. with doxygen or ReST markup instead of docstrings)
+
+* Implementing management GUI for controlling framework and editing configuration (e.g. signature editor)
+
+* Reducing dependance on external libraries (e.g. re-implement TST algorithm)
+
+* Refactoring XML parsing of templates
+
+Capture
+-------
+
+* Implementing auto-configuration of network interfaces (e.g. via ioctl())
+
+Prevention
+----------
+
+* Enhancing frame crafting capabilities of executor module
+
+Output
+---------
+
+* Implementing IDMEF ouput template
+
+* Implementing syslog output template

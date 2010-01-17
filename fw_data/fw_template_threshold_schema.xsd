@@ -1,0 +1,43 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- Schema for validation of threshold template rules files. -->
+
+<xsd:element name="template_config" type="templateconfigtype"/>
+	
+<xsd:complexType name="templateconfigtype">
+	<xsd:sequence>
+		<xsd:element name="threshold_rule" type="thresholdruletype" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name="template_type" type="xsd:string"/>
+</xsd:complexType>
+	
+<xsd:complexType name="thresholdruletype">
+	<xsd:sequence>
+		<xsd:element name="rule_description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="rule_data" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="timerange" type="timerangetype" minOccurs="1" maxOccurs="1"/>
+		<xsd:element name="rule_content" type="rulecontenttype" minOccurs="1" maxOccurs="1"/>
+	</xsd:sequence>
+	<xsd:attribute name="rule_identifier" type="xsd:string" use="required"/>
+	<xsd:attribute name="rule_severity" type="xsd:integer"/>
+	<xsd:attribute name="rule_silent" type="xsd:nonNegativeInteger"/>
+	<xsd:attribute name="enable" type="xsd:nonNegativeInteger"/>
+</xsd:complexType>
+	
+<xsd:complexType name="timerangetype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+        <xsd:attribute name="time_scale" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+	
+<xsd:complexType name="rulecontenttype">
+	<xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="frame_value" type="xsd:string" use="required"/>
+		<xsd:attribute name="threshold" type="xsd:positiveInteger" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+
+</xsd:schema>

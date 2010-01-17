@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test configuration for capture, detection, prevention and notifier module. -->
+<!DOCTYPE config>
+<config>
+	<!-- Configuration for the controller. -->
+	<controller_config loglevel="info">
+			<pidfile>
+				"/tmp/controller_prevention.pid"
+			</pidfile>
+		
+			<module_properties module_type="capture_pcapy" module_priority="5">
+				<module_name>
+					"fw_modules.module_capture_pcapy"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="detection_engine" module_priority="4">
+				<module_name>
+					"fw_modules.module_detection_engine"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="prevention_engine" module_priority="3">
+				<module_name>
+					"fw_modules.module_prevention_engine"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="executor" module_priority="2">
+				<module_name>
+					"fw_modules.module_executor"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="notifier" module_priority="1">
+				<module_name>
+					"fw_modules.module_notifier"
+				</module_name>
+			</module_properties>
+		
+			<module_properties module_type="dumper" module_priority="0.5">
+				<module_name>
+					"fw_modules.module_dumper"
+				</module_name>
+			</module_properties>
+		
+			<template_properties template_type="template_sid">
+				<template_name>
+					"fw_modules.fw_detection_templates.template_sid"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_threshold">
+				<template_name>
+					"fw_modules.fw_detection_templates.template_threshold"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_sessioncon">
+				<template_name>
+					"fw_modules.fw_prevention_templates.template_sessioncon"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_dumper">
+				<template_name>
+					"fw_modules.fw_output_templates.template_dumper"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_gui">
+				<template_name>
+					"fw_modules.fw_output_templates.template_gui"
+				</template_name>
+			</template_properties>
+		
+			<template_properties template_type="template_dbdumper_mysql">
+				<template_name>
+					"fw_modules.fw_output_templates.template_dbdumper_mysql"
+				</template_name>
+			</template_properties>
+		
+			<value value_name='outfile'>
+				"/tmp/controller_prevention.out"
+			</value>
+		
+			<value value_name='logfile'>
+				"/tmp/controller_prevention.log"
+			</value>
+	</controller_config>
+	
+	<!-- Configurations for submodules. -->
+	
+	<module_config module_type="capture_pcapy" module_identifier="capture">
+		<module_receivers>
+			"detection"
+		</module_receivers>
+		
+		<!-- Offline capture from file -->
+		<value value_name="capture_mode">
+			"1"
+		</value>
+
+		<!-- Path to pcap dumpfile -->
+		<value value_name="capture_source">
+			"fw_data/wlandump.pcap"
+		</value>
+		
+		<!-- Identifier in frame data messages -->
+		<value value_name="capture_signature">
+			"PCAPY_1"
+		</value>
+	</module_config>
+	
+	<module_config module_type="detection_engine" module_identifier="detection">
+		<module_receivers>
+			"notifier,prevention"
+		</module_receivers>
+		
+		<!-- Configuration for signature detection template -->
+		<template_configuration template_type="template_sid" template_identifier="sid">	
+			<!-- Configuration file for signatures -->
+			<value value_name="signature_file">
+				"fw_data/fw_template_sid_signatures_test.xml"
+			</value>
+			<!-- Schema file for signatures -->
+			<value value_name="signature_schema">
+				"fw_data/fw_template_sid_schema.xsd"
+			</value>
+		</template_configuration>
+		
+		<!-- Configuration for threshold detection template -->
+		<template_configuration template_type="template_threshold" template_identifier="threshold">
+			<!-- Configuration file for threshold rules -->
+			<value value_name="rules_file">
+				"fw_data/fw_template_threshold_rules_test.xml"
+			</value>
+			<!-- Schema file for threshold rules -->
+			<value value_name="rules_schema">
+				"fw_data/fw_template_threshold_schema.xsd"
+			</value>
+		</template_configuration>
+	</module_config>
+	
+	<module_config module_type="prevention_engine" module_identifier="prevention">		
+		<module_receivers receiver_groups="prevention_receiver,command_receiver">
+			"notifier"
+		</module_receivers>
+		
+		<!-- Configuration for session containment prevention template -->
+		<template_configuration template_type="template_sessioncon" template_identifier="sessioncon">
+			<!-- Configuration file for session containment rules -->
+			<value value_name="rules_file">
+				"fw_data/fw_template_sessioncon_rules_test.xml"
+			</value>
+			<!-- Schema file for threshold rules -->
+			<value value_name="rules_schema">
+				"fw_data/fw_template_sessioncon_schema.xsd"
+			</value>
+		</template_configuration>
+	</module_config>
+	
+	<module_config module_type="notifier" module_identifier="notifier">
+		<!-- Configuration for dumper output template -->
+		<template_configuration template_type="template_dumper" template_identifier="dumper">
+			<value value_name="dumpfile">
+				"/tmp/dumpfile_notifier.out"
+			</value>
+		</template_configuration>
+		
+		<!-- Configuration for gui output template. Needs Qt framework and PyQt bindings installed -->
+		<template_configuration template_type="template_gui" template_identifier="gui" template_loglevel="debug">
+		</template_configuration>
+		
+		<!-- Configuration for database dumper output template. Requires MySQL database and right DB credentials -->
+		<template_configuration template_type="template_dbdumper_mysql" template_identifier="mysql">
+			<value value_name="hostname">
+				"localhost"
+			</value>
+			<value value_name="db_name">
+				"FW_DATABASE"
+			</value>
+			<value value_name="db_tablename">
+				"FW_ALARMS"
+			</value>
+			<value value_name="db_user">
+				"dbuser"
+			</value>
+			<value value_name="db_pwd">
+				"dbpass"
+			</value>
+		</template_configuration>
+	</module_config>
+	
+</config>

@@ -1,0 +1,11 @@
+Usage instructions
+
+The framework is executed trough the controller module ("module_controller.py") which resides in the "fw_modules" directory. Execute the controller with the Python interpreter and root permissions. The controller uses the default configuration file "fw_general_configuration.xml" in the package's "fw_data" directory. A different configuration can be set with the "--config-file" parameter (for a full list of available parameters, run the controller with the "--help" parameter).
+
+The "fw_data" directory contains a number of sample configuration files which gradually add more modules to the basic setup. Customised framework configurations can be created with the options listen in the thesis appendix. Note: Relative file paths in the configuration files use the parent directory of the controller script's directory as root (which is the package root directory, if the package structure has not been altered, so "fw_data/myconfiguration.xml" will work).
+
+A sample WLAN frame capture is provided with the file "wlandump.cap" in the "fw_data" directory. The sample configurations use this dumpfile as data source to demonstrate detection and prevention functions.
+
+The log- and outfile are created in the controller's directory (as "controller.log" and "controller.out", respectively) if no custom path is configured in the configuration files.
+
+If you encounter strange/catastrophic/weird bugs or want to suggest improvements, feel free to contact me under "pkrebsATgmail.com" (substitute the...oh well, I think you know).

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<!-- Configuration file for session containment template. Contains test flooding rules. -->
+<template_config template_type="sessioncon template">
+	<!-- Session containment against receivers of probe response frame -->
+	<containment_rule rule_identifier="contain_proberespreceiver" rule_severity="1" rule_action="1" rule_interruptible="0" enable="1">	
+		<rule_description>
+			"Containing receiver of Probe Response"
+		</rule_description>
+		
+		<trigger_signature>
+			"proberesponse_frame"
+		</trigger_signature>
+		
+		<frame_type>
+			"DISASSOCIATION"
+		</frame_type>
+		
+		<duration time_scale="min">
+			2
+		</duration>
+		
+		<sleeptime time_scale="s">
+			0.4
+		</sleeptime>
+		
+		<impersonate_rule>
+			"SRC"
+		</impersonate_rule>
+	</containment_rule>
+</template_config>

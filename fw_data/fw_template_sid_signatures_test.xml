@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<!-- Configuration file for signature template. Contains definitions for test signatures. -->
+<template_config template_type="sid template">
+	<!-- Most simple signature. Is used for itself and in a complex signature -->
+	<simple_signature signature_identifier="broadcast_frame" signature_severity="0" enable="1">	
+		<signature_description>
+			"Frame with broadcast destination address"
+		</signature_description>
+		
+		<signature_patterns frame_value="ADDR1">
+			"FFFFFFFFFFFF"
+		</signature_patterns>
+	</simple_signature>
+	
+	<!-- Signature with AND conjunction -->
+	<simple_signature signature_identifier="evil_beacon" signature_severity="1" signature_logic="AND" enable="1">	
+		<signature_description>
+			"Beacon Frame from evil MAC address"
+		</signature_description>
+		
+		<signature_patterns frame_value="ADDR2">
+			"0014C12BD06F"
+		</signature_patterns>
+		
+		<signature_patterns frame_value="FTYPE" pattern_type="word">
+			"BEACON"
+		</signature_patterns>
+	</simple_signature>
+	
+	<!-- Inverted signature (MAC whitelist) -->
+	<simple_signature signature_identifier="unknown_source_mac" signature_severity="1" signature_invert="1" enable="1">	
+		<signature_description>
+			"Frame from non-legit source MAC address"
+		</signature_description>
+		
+		<signature_patterns frame_value="ADDR2">
+			"0014C12BD06F,001217b7cfa1"
+		</signature_patterns>
+	</simple_signature>
+	
+	<!-- Simple signature as part of a complex signature -->
+	<simple_signature signature_identifier="unencrypted_data" signature_severity="1" signature_logic="AND" enable="1">	
+		<signature_description>
+			"Unencrypted DATA frame"
+		</signature_description>
+		
+		<signature_patterns frame_value="PROTFRAME" pattern_type="bit">
+			"0"
+		</signature_patterns>
+		
+		<signature_patterns frame_value="FTYPE" pattern_type="word">
+			"DATA"
+		</signature_patterns>
+	</simple_signature>
+	
+	<!-- Signature as part of a complex signature. Is also used in session containment, hence not set to silent -->
+	<simple_signature signature_identifier="proberesponse_frame" signature_severity="0" signature_silent="0" enable="1">
+		<signature_description>
+			"Probe response frame encountered"
+		</signature_description>
+		
+		<signature_patterns frame_value="FSUBTYPE" pattern_type="word">
+			"PROBERESPONSE"
+		</signature_patterns>
+	</simple_signature>
+	
+	<!-- Signature set to silent as part of a complex signature -->
+	<simple_signature signature_identifier="proberequest_frame" signature_severity="0" signature_silent="1" enable="1">
+		<signature_description>
+			"Probe request frame encountered"
+		</signature_description>
+		
+		<signature_patterns frame_value="FSUBTYPE" pattern_type="word">
+			"PROBEREQUEST"
+		</signature_patterns>
+	</simple_signature>	
+
+	<!-- Sample OR complex signature, correlates the last two simple signatures -->
+	<complex_signature signature_identifier="proberespreq_frame" signature_severity="0" signature_logic="OR" enable="1">
+		<signature_description>
+			Probe Response or Request frame encountered"
+		</signature_description>
+		
+		<!-- Identifiers of subsignatures -->
+		<signature_subsignatures>
+			"proberequest_frame,proberesponse_frame"
+		</signature_subsignatures>
+	</complex_signature>
+	
+	<!-- Sample AND complex signature -->
+	<complex_signature signature_identifier="unencrypted_bcast_dataframe" signature_severity="1" signature_logic="AND" enable="1">
+		<signature_description>
+			"Unencrypted DATA frame with broadcast destination address"
+		</signature_description>
+		
+		<signature_subsignatures>
+			"broadcast_frame,unencrypted_data"
+		</signature_subsignatures>
+	</complex_signature>
+	
+</template_config>

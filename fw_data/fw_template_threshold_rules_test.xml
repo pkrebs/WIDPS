@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<!-- Configuration file for threshold template. Contains test threshold rules. -->
+<template_config template_type="threshold template">
+	
+	<!-- This rule will undoubtedly match and stay up all the time -->
+	<threshold_rule rule_identifier="beacon_normal" rule_severity="0" enable="1">	
+		<rule_description>
+			"5 or more beacon frames in 5 seconds"
+		</rule_description>
+		
+		<timerange time_scale="s">
+			5
+		</timerange>
+		
+		<rule_content frame_value="FSUBTYPE" threshold="5">
+			"BEACON"
+		</rule_content>
+	</threshold_rule>
+	
+	<!-- This rule will certainly NOT match (Note threshold) -->
+	<threshold_rule rule_identifier="beacon_flood" rule_severity="0" enable="1">	
+		<rule_description>
+			"1000 or more beacon frames in 5 seconds"
+		</rule_description>
+		
+		<timerange time_scale="s">
+			5
+		</timerange>
+		
+		<rule_content frame_value="FSUBTYPE" threshold="1000">
+			"BEACON"
+		</rule_content>
+	</threshold_rule>
+	
+	<!-- A more general rule -->
+	<threshold_rule rule_identifier="management_normal" rule_severity="0" enable="1">	
+		<rule_description>
+			"20 or more management frames in 20 seconds"
+		</rule_description>
+		
+		<timerange time_scale="s">
+			20
+		</timerange>
+		
+		<rule_content frame_value="FTYPE" threshold="20">
+			"MANAGEMENT"
+		</rule_content>
+	</threshold_rule>
+	
+	<!-- Two rules for detecting a DoS attack. Test out with DoS simulation script -->
+	<threshold_rule rule_identifier="disassociation_dos" rule_severity="2" enable="1">	
+		<rule_description>
+			"300 or more disassociation frames in 1 second"
+		</rule_description>
+		
+		<timerange time_scale="s">
+			1
+		</timerange>
+		
+		<rule_content frame_value="FSUBTYPE" threshold="300">
+			"DISASSOCIATION"
+		</rule_content>
+	</threshold_rule>
+	
+	<threshold_rule rule_identifier="deauthentication_dos" rule_severity="2" enable="1">	
+		<rule_description>
+			"300 or more deauthentication frames in 1 second"
+		</rule_description>
+		
+		<timerange time_scale="s">
+			1
+		</timerange>
+		
+		<rule_content frame_value="FSUBTYPE" threshold="300">
+			"DEAUTHENTICATION"
+		</rule_content>
+	</threshold_rule>
+	
+</template_config>

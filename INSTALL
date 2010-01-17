@@ -1,0 +1,28 @@
+Installation instructions
+
+The WIDS/WIPS framework in its current form as package does not need to be installed. You can use it right after unpacking (just do not alter the package directory structure!!).
+
+If you unpack the package into a directory which is not in the module search path of your Python distribution you must first edit the PYTHONPATH environment variable with
+
+	export PYTHONPATH=$PYTHONPATH:/path/of/the/package/directory	(e. g. "/tmp/fw_package_1v1")
+
+temporarily on the shell or permanently in your ~/.bashrc file.
+
+
+Requirements
+
+Python 2.6 is required for executing the framework.
+
+A full framework instance (all modules/templates) requires that the following Python modules are installed on your system:
+
+- lxml (>= 2.1.5)
+- mysql-python (>= 1.2.2, for the mysql database dumper template)
+- pcapy (>= 0.10.5, for the frame capture module)
+- PyQt (>= 4.4.4, for the GUI output template)
+- pytst (>= 1.16, for the signature detection template)
+- Scapy (>= 2.0.1, for the executor module)
+
+In addition, the following non-Python applications/libraries are required:
+
+- libpcap (>= 0.9.8-2, for the frame capture module)
+- Qt (>= 4.4.0, for the GUI output templates)
